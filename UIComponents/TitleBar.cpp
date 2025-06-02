@@ -8,11 +8,10 @@
   ==============================================================================
 */
 
-#include <JuceHeader.h>
 #include "TitleBar.h"
 
 //==============================================================================
-TitleBar::TitleBar()
+TitleBar::TitleBar(const String& name): name(name)
 {
 
 }
@@ -26,8 +25,8 @@ void TitleBar::paint (juce::Graphics& g)
     auto background = getLookAndFeel().findColour(Slider::ColourIds::rotarySliderOutlineColourId);
     auto foreground = getLookAndFeel().findColour(ResizableWindow::ColourIds::backgroundColourId);
     auto bounds = getLocalBounds();
-    const Font font {"Futara", 23, Font::bold};
-    const Font smallfont {"Futara", 14, Font::bold};
+    const FontOptions font {"Futara", 23, Font::bold};
+    const FontOptions smallfont {"Futara", 14, Font::bold};
 
     g.fillAll (background);   // clear the background
     bounds.removeFromTop(3);
@@ -35,7 +34,7 @@ void TitleBar::paint (juce::Graphics& g)
 
     g.setColour (foreground);
     g.setFont (font);
-    g.drawText ("OTTO ", bounds.removeFromLeft(70),
+    g.drawText  (name, bounds.removeFromLeft(70),
                 juce::Justification::bottomLeft, true);   // draw some placeholder text
 
     g.fillRect(bounds.removeFromLeft(3));
@@ -48,9 +47,4 @@ void TitleBar::paint (juce::Graphics& g)
 
 void TitleBar::resized()
 {
-    auto bounds = getLocalBounds();
-    
-    // This method is where you should set the bounds of any child
-    // components that your component contains..
-
 }

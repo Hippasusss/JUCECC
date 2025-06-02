@@ -7,8 +7,10 @@ Author:  Danny Herbert
 ==============================================================================
 */
 #pragma once
-#include "JuceHeader.h"
 #include "RingBuffer.h"
+#include "juce_dsp/juce_dsp.h"
+
+using namespace juce;
 
 class Meter: dsp::ProcessorBase
 {

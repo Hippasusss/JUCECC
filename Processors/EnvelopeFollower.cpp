@@ -8,7 +8,6 @@ Author:  Danny Herbert
 ==============================================================================
 */
 
-#include <JuceHeader.h>
 #include "EnvelopeFollower.h"
 
 EnvelopeFollower::EnvelopeFollower(): 

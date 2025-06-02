@@ -10,9 +10,10 @@
 
 #pragma once
 
-#include <JuceHeader.h>
 #include "Constants.h"
 #include "juce_gui_basics/juce_gui_basics.h"
+using namespace juce;
+
 class DropDownMenu;
 
 //==============================================================================

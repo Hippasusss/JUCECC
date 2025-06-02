@@ -10,10 +10,10 @@ Author:  Danny Herbert
 
 #pragma once
 
-#include <JuceHeader.h>
 #include "EnvelopeFollower.h"
 #include "Graph.h"
 #include "DisplayData.h"
+#include "juce_gui_basics/juce_gui_basics.h"
 
 class GraphDisplay : public Component,
 	public Timer

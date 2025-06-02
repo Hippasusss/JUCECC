@@ -9,7 +9,11 @@
 */
 
 #pragma once
+#include "juce_events/juce_events.h"
+using namespace juce;
+
 template <typename ValueType>
+
 class RampSmoother : Timer
 {
 public:

@@ -10,7 +10,6 @@ Author:  Danny Herbert
 
 
 #pragma once
-#include <JuceHeader.h>
 #include "RampSmoother.h"
 #include "Constants.h"
 #include "Helpers.h"

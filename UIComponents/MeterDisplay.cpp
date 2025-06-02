@@ -8,9 +8,7 @@ Author:  Danny Herbert
 ==============================================================================
 */
 
-#include <JuceHeader.h>
 #include "MeterDisplay.h"
-#include "Constants.h"
 
 MeterDisplay::MeterDisplay(Meter* newMeter) :
     meter(newMeter),

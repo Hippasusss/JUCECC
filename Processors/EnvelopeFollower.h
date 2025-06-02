@@ -9,8 +9,10 @@ Author:  Danny Herbert
 */
 
 #pragma once
-#include <JuceHeader.h>
+#include "juce_dsp/juce_dsp.h"
 #include "RingBuffer.h"
+
+using namespace juce;
 
 class EnvelopeFollower: dsp::ProcessorBase
 {

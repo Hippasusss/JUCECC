@@ -9,9 +9,11 @@
 */
 
 #pragma once
-#include "JuceHeader.h"
+#include "juce_dsp/juce_dsp.h"
 
-#pragma once
+using namespace juce;
+
+
  class BufferStore : dsp::ProcessorBase
  {
  public:

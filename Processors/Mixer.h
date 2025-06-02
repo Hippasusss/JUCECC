@@ -7,8 +7,11 @@
 
   ==============================================================================
 */
-#include "JuceHeader.h"
 #pragma once
+#include "juce_dsp/juce_dsp.h"
+
+using namespace juce;
+
 class Mixer : dsp::ProcessorBase
 {
 public:

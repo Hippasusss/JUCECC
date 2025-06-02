@@ -9,10 +9,12 @@ Author:  Danny Herbert
 */
 
 #pragma once
-#include <JuceHeader.h>
+#include "juce_gui_basics/juce_gui_basics.h"
+
 #include "CustomLookAndFeel.h"
 #include "LevelValueDisplay.h"
 #include "Meter.h"
+using namespace juce;
 
 //==============================================================================
 /*
