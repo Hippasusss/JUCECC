@@ -14,20 +14,20 @@ using namespace juce;
 
 template <typename ValueType>
 
-class RampSmoother : Timer
+class ValueSmoother : Timer
 {
 public:
-	RampSmoother() : value(0), destinationValue(0){}
-	RampSmoother(ValueType initValue, int refreshRateHz);
-	RampSmoother(ValueType initValue, int refreshRateHz, float ARTime);
-	RampSmoother& operator=(RampSmoother&& other) noexcept;
-	RampSmoother& operator=(const RampSmoother& other) noexcept;
-	RampSmoother& operator=(ValueType other) noexcept;
+	ValueSmoother() : value(0), destinationValue(0){}
+	ValueSmoother(ValueType initValue, int refreshRateHz);
+	ValueSmoother(ValueType initValue, int refreshRateHz, float ARTime);
+	ValueSmoother& operator=(ValueSmoother&& other) noexcept;
+	ValueSmoother& operator=(const ValueSmoother& other) noexcept;
+	ValueSmoother& operator=(ValueType other) noexcept;
 	ValueType operator-(ValueType other) noexcept;
 	ValueType operator+(ValueType other) noexcept;
 	operator ValueType&();
-	bool operator>(const RampSmoother& other) noexcept;
-	bool operator<(const RampSmoother& other) noexcept;
+	bool operator>(const ValueSmoother& other) noexcept;
+	bool operator<(const ValueSmoother& other) noexcept;
 
 	void setValue(ValueType val);
 	void setAttack(float newRate);
@@ -45,14 +45,14 @@ private:
 };
 
 template <typename ValueType>
-RampSmoother<ValueType>::RampSmoother(ValueType initValue, int refreshRateHz): value(initValue),
+ValueSmoother<ValueType>::ValueSmoother(ValueType initValue, int refreshRateHz): value(initValue),
                                                                                destinationValue(initValue)
 {
 	startTimerHz(refreshRateHz);
 }
 
 template <typename ValueType>
-RampSmoother<ValueType>::RampSmoother(ValueType initValue, int refreshRateHz, float ARTime): value(initValue),
+ValueSmoother<ValueType>::ValueSmoother(ValueType initValue, int refreshRateHz, float ARTime): value(initValue),
                                                                                              destinationValue(initValue)
 {
 	release = ARTime;
@@ -61,7 +61,7 @@ RampSmoother<ValueType>::RampSmoother(ValueType initValue, int refreshRateHz, fl
 }
 
 template <typename ValueType>
-RampSmoother<ValueType>& RampSmoother<ValueType>::operator=(RampSmoother&& other) noexcept
+ValueSmoother<ValueType>& ValueSmoother<ValueType>::operator=(ValueSmoother&& other) noexcept
 {
 	if (this == &other)
 		return other;
@@ -69,82 +69,82 @@ RampSmoother<ValueType>& RampSmoother<ValueType>::operator=(RampSmoother&& other
 }
 
 template <typename ValueType>
-RampSmoother<ValueType>& RampSmoother<ValueType>::operator=(const RampSmoother& other) noexcept
+ValueSmoother<ValueType>& ValueSmoother<ValueType>::operator=(const ValueSmoother& other) noexcept
 {
 	destinationValue = other.destinationValue;
 	return *this;
 }
 
 template <typename ValueType>
-RampSmoother<ValueType>& RampSmoother<ValueType>::operator=(ValueType other) noexcept
+ValueSmoother<ValueType>& ValueSmoother<ValueType>::operator=(ValueType other) noexcept
 {
 	destinationValue = other;
 	return *this;
 }
 
 template <typename ValueType>
-ValueType RampSmoother<ValueType>::operator-(ValueType other) noexcept
+ValueType ValueSmoother<ValueType>::operator-(ValueType other) noexcept
 {
 	return destinationValue - other;
 }
 
 template <typename ValueType>
-ValueType RampSmoother<ValueType>::operator+(ValueType other) noexcept
+ValueType ValueSmoother<ValueType>::operator+(ValueType other) noexcept
 {
 	return destinationValue + other;
 }
 
 template <typename ValueType>
-RampSmoother<ValueType>::operator ValueType&()
+ValueSmoother<ValueType>::operator ValueType&()
 {
 	return value;
 }
 
 template <typename ValueType>
-bool RampSmoother<ValueType>::operator>(const RampSmoother& other) noexcept
+bool ValueSmoother<ValueType>::operator>(const ValueSmoother& other) noexcept
 {
 	return destinationValue > other.destinationValue;
 }
 
 template <typename ValueType>
-bool RampSmoother<ValueType>::operator<(const RampSmoother& other) noexcept
+bool ValueSmoother<ValueType>::operator<(const ValueSmoother& other) noexcept
 {
 	return destinationValue < other.destinationValue;
 }
 
 template <typename ValueType>
-void RampSmoother<ValueType>::setValue(ValueType val)
+void ValueSmoother<ValueType>::setValue(ValueType val)
 {
 	destinationValue = val;
 }
 
 template <typename ValueType>
-void RampSmoother<ValueType>::setAttack(float newRate)
+void ValueSmoother<ValueType>::setAttack(float newRate)
 {
 	attack = newRate / getTimerInterval();
 }
 
 template <typename ValueType>
-void RampSmoother<ValueType>::setRelease(float newRate)
+void ValueSmoother<ValueType>::setRelease(float newRate)
 {
 	release = newRate / getTimerInterval();
 }
 
 template <typename ValueType>
-void RampSmoother<ValueType>::setRefreshRate(int newRate)
+void ValueSmoother<ValueType>::setRefreshRate(int newRate)
 {
 	stopTimer();
 	startTimerHz(newRate);
 }
 
 template <typename ValueType>
-ValueType RampSmoother<ValueType>::getValue() const
+ValueType ValueSmoother<ValueType>::getValue() const
 {
 	return value;
 }
 
 template <typename ValueType>
-void RampSmoother<ValueType>::timerCallback()
+void ValueSmoother<ValueType>::timerCallback()
 {
 	const float envelopeTime = destinationValue > value ? attack : release;
 	const float timerInterval = static_cast<float>(getTimerInterval()) / 1000.0f;

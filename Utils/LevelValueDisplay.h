@@ -10,7 +10,7 @@ Author:  Danny Herbert
 
 
 #pragma once
-#include "RampSmoother.h"
+#include "ValueSmoother.h"
 #include "Constants.h"
 #include "Helpers.h"
 
@@ -37,7 +37,7 @@ class LevelValueDisplay
 
     private:
         ValueType value;
-        RampSmoother<ValueType> smoother;
+        ValueSmoother<ValueType> smoother;
         const float dbMinusInfinity = -60;
         const float AttackRelease = 0.2;
 
