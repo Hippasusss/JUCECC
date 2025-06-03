@@ -38,8 +38,8 @@ public:
 	void timerCallback() override;
 
 private:
-	std::atomic<ValueType> value;
-	std::atomic<ValueType> destinationValue;
+	ValueType value;
+	ValueType destinationValue;
 	float attack  = 0.5;
 	float release = 0.5;
 };
