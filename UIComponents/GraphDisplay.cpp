@@ -13,11 +13,8 @@
 
 //==============================================================================
 
-GraphDisplay::GraphDisplay(Graph* newGraph, EnvelopeFollower* newEnvelopeFollower) :
-    graph(newGraph),
-    envelopeFollower(newEnvelopeFollower),
-    audioDisplayData(newGraph->audioDisplayData, true),
-    envelopeDisplayData(newEnvelopeFollower->envelopeDisplayData)
+GraphDisplay::GraphDisplay(std::initializer_list<DisplayData<float>> displayDatas) :
+    displayDatas(displayDatas)
 {
 	startTimerHz(timer_constants::REFRESH_RATE);
 }
@@ -61,8 +58,10 @@ void GraphDisplay::drawPath(Graphics& graphics, const DisplayData<float>& data,
 
 void GraphDisplay::paint(Graphics& graphics)
 {
-    drawPath(graphics, audioDisplayData, colour_constants::lightMain, true);
-    drawPath(graphics, envelopeDisplayData, colour_constants::main, false, 3.0f);
+    for (auto& displayData : displayDatas) 
+    {
+        drawPath(graphics, displayData, displayData.getColour(), displayData.getShouldFill());
+    }
 }
 
 void GraphDisplay::resized()
@@ -71,8 +70,10 @@ void GraphDisplay::resized()
 
 void GraphDisplay::timerCallback()
 {
-    envelopeDisplayData.updateValues();
-    audioDisplayData.updateValues();
+    for (auto& displayData : displayDatas) 
+    {
+        displayData.updateValues();
+    }
 	repaint();
 }
 

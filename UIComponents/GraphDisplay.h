@@ -10,16 +10,18 @@ Author:  Danny Herbert
 
 #pragma once
 
-#include "EnvelopeFollower.h"
-#include "Graph.h"
 #include "DisplayData.h"
+
 #include "juce_gui_basics/juce_gui_basics.h"
+#include <initializer_list>
+
+
 
 class GraphDisplay : public Component,
 	public Timer
 {
 public:
-	GraphDisplay(Graph* newGraph, EnvelopeFollower* newEnvelopeFollower);
+	GraphDisplay(std::initializer_list<DisplayData<float>> displayDatas);
 	~GraphDisplay();
 
     void drawPath(Graphics& graphics, const DisplayData<float>& data, 
@@ -30,10 +32,7 @@ public:
 	void resized() override;
 
 private:
-	Graph* graph;
-	EnvelopeFollower* envelopeFollower;
-    DisplayData<float> audioDisplayData;
-    DisplayData<float> envelopeDisplayData;
+    std::vector<DisplayData<float>> displayDatas;
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(GraphDisplay)
 };

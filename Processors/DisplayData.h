@@ -7,18 +7,20 @@
 
   ==============================================================================
 */
-
 #pragma once
 #include "RingBuffer.h"
+#include "juce_graphics/juce_graphics.h"
 
 template <typename ValueType = float>
 class DisplayData {
 public:
-    DisplayData(RingBufferVector<ValueType>& sourceBuffer, bool dbScale = false ,size_t lengthMs = 2600 ) : 
+    DisplayData(RingBufferVector<ValueType>& sourceBuffer, Colour colour, bool shouldFill = false, bool dbScale = false ,size_t lengthMs = 2600 ) : 
         sourceBuffer(sourceBuffer),
         reductionFactor(500),
         bufferSize(calculateBufferSize(lengthMs)),
         historyBuffer(bufferSize),
+        pathColour(colour),
+        shouldFill(shouldFill),
         dbScale(dbScale),
         sampleRate(sourceBuffer.getSize()),
         lengthMs(lengthMs)
@@ -78,14 +80,26 @@ public:
         return returnVector;
     }
 
+    Colour getColour()
+    {
+        return pathColour;
+    }
+
+    bool getShouldFill()
+    {
+        return shouldFill;
+    }
+
 private:
     RingBufferVector<ValueType>& sourceBuffer;
+    RingBufferVector<ValueType> historyBuffer;
     size_t reductionFactor;
     size_t bufferSize;
-    RingBufferVector<ValueType> historyBuffer;
     size_t sampleRate;
     size_t lengthMs;
     bool dbScale = false;
+    bool shouldFill = false;
+    Colour pathColour = Colours::salmon;
 
     ValueType runningSum = 0;
     size_t nextReadPosition = 0;
