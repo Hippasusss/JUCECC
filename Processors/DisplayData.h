@@ -92,9 +92,9 @@ public:
 
 private:
     RingBufferVector<ValueType>& sourceBuffer;
-    RingBufferVector<ValueType> historyBuffer;
     size_t reductionFactor;
     size_t bufferSize;
+    RingBufferVector<ValueType> historyBuffer;
     size_t sampleRate;
     size_t lengthMs;
     bool dbScale = false;
