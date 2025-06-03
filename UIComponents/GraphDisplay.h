@@ -24,8 +24,8 @@ public:
 	GraphDisplay(std::initializer_list<DisplayData<float>> displayDatas);
 	~GraphDisplay();
 
-    void drawPath(Graphics& graphics, const DisplayData<float>& data, 
-                           Colour colour, bool shouldFill, float strokeThickness);
+    void drawPath(Graphics& graphics, const DisplayData<float>& data);
+
 
 	void paint(Graphics&) override;
 	void timerCallback() override;

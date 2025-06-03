@@ -14,13 +14,14 @@
 template <typename ValueType = float>
 class DisplayData {
 public:
-    DisplayData(RingBufferVector<ValueType>& sourceBuffer, Colour colour, bool shouldFill = false, bool dbScale = false ,size_t lengthMs = 2600 ) : 
+    DisplayData(RingBufferVector<ValueType>& sourceBuffer, Colour colour, bool shouldFill = true, size_t strokeThickness = 1, bool dbScale = true, size_t lengthMs = 2600 ) : 
         sourceBuffer(sourceBuffer),
         reductionFactor(500),
         bufferSize(calculateBufferSize(lengthMs)),
         historyBuffer(bufferSize),
         pathColour(colour),
         shouldFill(shouldFill),
+        strokeThickness(strokeThickness),
         dbScale(dbScale),
         sampleRate(sourceBuffer.getSize()),
         lengthMs(lengthMs)
@@ -80,14 +81,19 @@ public:
         return returnVector;
     }
 
-    Colour getColour()
+    Colour getColour() const
     {
         return pathColour;
     }
 
-    bool getShouldFill()
+    bool getShouldFill() const
     {
         return shouldFill;
+    }
+
+    size_t getStrokeThickness() const
+    {
+        return strokeThickness;
     }
 
 private:
@@ -99,6 +105,7 @@ private:
     size_t lengthMs;
     bool dbScale = false;
     bool shouldFill = false;
+    size_t strokeThickness = 1;
     Colour pathColour = Colours::salmon;
 
     ValueType runningSum = 0;

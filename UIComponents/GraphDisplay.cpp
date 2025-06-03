@@ -21,10 +21,10 @@ GraphDisplay::GraphDisplay(std::initializer_list<DisplayData<float>> displayData
 GraphDisplay::~GraphDisplay() = default;
 
 
-void GraphDisplay::drawPath(Graphics& graphics, const DisplayData<float>& data, 
-                           Colour colour, bool shouldFill, float strokeThickness = 1.0f)
+void GraphDisplay::drawPath(Graphics& graphics, const DisplayData<float>& data)
 {
-    graphics.setColour(colour);
+    const bool shouldFill =  data.getShouldFill();
+    graphics.setColour(data.getColour());
     
     auto previousValues = data.getPreviousValues();
     const int width = getBounds().getWidth();
@@ -50,7 +50,7 @@ void GraphDisplay::drawPath(Graphics& graphics, const DisplayData<float>& data,
         path.closeSubPath();
         graphics.fillPath(path);
     } else {
-        PathStrokeType stroke(strokeThickness);
+        PathStrokeType stroke(data.getStrokeThickness());
         stroke.setEndStyle(PathStrokeType::rounded);
         graphics.strokePath(path, stroke);
     }
@@ -60,7 +60,7 @@ void GraphDisplay::paint(Graphics& graphics)
 {
     for (auto& displayData : displayDatas) 
     {
-        drawPath(graphics, displayData, displayData.getColour(), displayData.getShouldFill());
+        drawPath(graphics, displayData);
     }
 }
 
