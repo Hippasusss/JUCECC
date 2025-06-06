@@ -20,19 +20,15 @@ MeterDisplay::MeterDisplay(Meter* newMeter) :
     };
     startTimerHz(timer_constants::REFRESH_RATE);
     addAndMakeVisible(clipMeter);
-    addAndMakeVisible(levelText);
     peak.setRate(0.5);
     RMS.setRate(0.5);
     peakHold.setRate(0.5);
-    clipMeter.setLookAndFeel(&lookAndFeel2);
     clipMeter.setColour(ToggleButton::ColourIds::tickColourId, colour_constants::red);
-    clipMeter.setColour(ToggleButton::ColourIds::tickDisabledColourId, colour_constants::backGround);
+    clipMeter.setColour(ToggleButton::ColourIds::tickDisabledColourId, colour_constants::transparent);
 }
 
 MeterDisplay::~MeterDisplay()
 {
-    clipMeter.setLookAndFeel(nullptr);
-    levelText.setLookAndFeel(nullptr);
 };
 
 void MeterDisplay::paint (Graphics& graphics)
@@ -95,7 +91,7 @@ void MeterDisplay::paint (Graphics& graphics)
     // Set level readout at top of meter
     const long peakHoldValue = peakHold.getSmoothedValueDBFS();
     const String labelText = peakHoldValue > -60 ? String(peakHoldValue): String("");
-    levelText.setText(labelText, dontSendNotification);
+    clipMeter.setButtonText(labelText);
 
     // Set clip indicator
     clip = meter->getClip();
@@ -116,20 +112,15 @@ void MeterDisplay::paint (Graphics& graphics)
 
 void MeterDisplay::resized() 
 {
-    clipMeter.setLookAndFeel(&lookAndFeel2);
-    levelText.setLookAndFeel(&lookAndFeel2);
     vertical = getHeight() > getWidth();
-    const int clipSize = 10;
+    const size_t clipSize = 14;
     if(vertical)
     {
         clipMeter.setBounds(0,0, getWidth(), clipSize);
-        levelText.setBounds(0,5, getWidth(), 15);
     }
     else
     {
-        const int textSize = 40;
         clipMeter.setBounds(getWidth() - clipSize,0, clipSize, getHeight());
-        levelText.setBounds(getWidth() - textSize + clipSize, 0, textSize, getHeight());
     }
 }
 

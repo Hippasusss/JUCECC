@@ -66,6 +66,7 @@ void GraphDisplay::paint(Graphics& graphics)
 
 void GraphDisplay::resized()
 {
+    repaint();
 }
 
 void GraphDisplay::timerCallback()

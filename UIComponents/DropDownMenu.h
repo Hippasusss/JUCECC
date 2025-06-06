@@ -63,11 +63,14 @@ private:
 
     void lookAndFeelChanged() override;
     void mouseUp(const juce::MouseEvent& event) override;
-    DropDownColours colours;
     void init();
     DropDownContext contextMenu;
     String text;
     size_t currentIndex = 0;
+
+    Colour backGroundColour = colour_constants::backGround;
+    Colour highlightColour = colour_constants::lightMain;
+    Colour textColour = colour_constants::main;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (DropDownMenu)
 };

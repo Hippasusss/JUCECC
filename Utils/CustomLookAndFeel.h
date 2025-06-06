@@ -29,24 +29,59 @@ void drawToggleButton(Graphics& graphics, ToggleButton& button, bool shouldDrawB
 {
     const int width = button.getBounds().getWidth();
     const int height = button.getBounds().getHeight();
+    const Colour mainColour = button.findColour(ToggleButton::ColourIds::tickColourId);
+    const Colour secondColour = button.findColour(ToggleButton::ColourIds::tickDisabledColourId);
+    const Colour textColour = button.findColour(ToggleButton::ColourIds::textColourId);
 
     int fillOffset = 0;
-    String text = button.getButtonText().initialSectionNotContaining("/");
-    if(! button.getToggleState())
+    String text = button.getButtonText();
+    if (text.contains("/"))
     {
-        text = button.getButtonText().fromFirstOccurrenceOf("/", false, true);
-        fillOffset = width / 2;
+        text = text.initialSectionNotContaining("/");
+        if(!button.getToggleState())
+        {
+            text = text.fromFirstOccurrenceOf("/", false, true);
+            fillOffset = width / 2;
+        }
+
+        const Rectangle<int> area {0, 0 , width, height};
+        const Rectangle<int> fillArea {fillOffset, 0 , width/2, height};
+        graphics.setColour(mainColour);
+        graphics.drawRect(area, lineThickness);
+        graphics.fillRect(fillArea);
+
+        graphics.setColour(secondColour);
+        graphics.setFont(font);
+        graphics.drawText(text, fillArea, Justification::centred);
+    }
+    else
+    {
+        const Rectangle<int> area {0, 0 , width, height};
+        const Rectangle<int> fillArea {0, 0 , width, height};
+        button.getToggleState() ? graphics.setColour(mainColour) : graphics.setColour(secondColour);
+        graphics.fillRect(fillArea);
+
+        graphics.setColour(textColour);
+        graphics.setFont(font);
+        graphics.drawText(text, fillArea, Justification::centred);
     }
 
-    const Rectangle<int> area {0, 0 , width, height};
-    const Rectangle<int> fillArea {fillOffset, 0 , width/2, height};
-    graphics.setColour(colour_constants::main);
-    graphics.drawRect(area, lineThickness);
-    graphics.fillRect(fillArea);
+}
+void drawButtonText(juce::Graphics& graphics, juce::TextButton& button, bool shouldDrawButtonAsHighlighted, bool shouldDrawButtonAsDown) override
+{
 
-    graphics.setColour(colour_constants::backGround);
+    Colour normalBack = button.findColour(TextButton::ColourIds::buttonColourId);
+    Colour highlightBack = button.findColour(TextButton::ColourIds::buttonOnColourId);
+    Colour normalText = button.findColour(TextButton::ColourIds::textColourOffId);
+    Colour highlightText = button.findColour(TextButton::ColourIds::textColourOnId);
+
+    String text = button.getButtonText();
+    auto bounds = button.getLocalBounds();
+    graphics.setColour(shouldDrawButtonAsHighlighted ? normalBack : highlightBack); 
+    graphics.fillRect(bounds);
+    graphics.setColour(shouldDrawButtonAsHighlighted ? normalText : highlightText);
     graphics.setFont(font);
-    graphics.drawText(text, fillArea, Justification::centred);
+    graphics.drawText(text, bounds, Justification::centred);
 }
 
 void drawRotarySlider(Graphics& graphics, int x, int y, int width, int height, 
@@ -132,7 +167,7 @@ void drawToggleButton(Graphics& graphics, ToggleButton& button, bool shouldDrawB
         graphics.fillRect(fillArea);
     }
     else
-    {
+{
         graphics.setColour(button.findColour(ToggleButton::ColourIds::tickDisabledColourId));
         graphics.fillRect(fillArea);
     }

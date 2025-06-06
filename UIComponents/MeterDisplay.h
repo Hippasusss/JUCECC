@@ -11,7 +11,6 @@ Author:  Danny Herbert
 #pragma once
 #include "juce_gui_basics/juce_gui_basics.h"
 
-#include "CustomLookAndFeel.h"
 #include "LevelValueDisplay.h"
 #include "Meter.h"
 using namespace juce;
@@ -22,32 +21,34 @@ using namespace juce;
 class MeterDisplay    : public Component,
     public Timer
 {
-    public: void timerCallback() override;
-        MeterDisplay(Meter* newMeter);
-        ~MeterDisplay();
+public: void timerCallback() override;
+    enum ColourIds
+    {
+    };
 
-        void paint (Graphics&) override;
-        void resized() override;
-        void setMeter(Meter* newMeter);
+    MeterDisplay(Meter* newMeter);
+    ~MeterDisplay();
 
-    private:
-        Meter* meter;
-        ToggleButton clipMeter;
-        Label levelText;
-        CustomLookAndFeel2 lookAndFeel2;
+    void paint (Graphics&) override;
+    void resized() override;
+    void setMeter(Meter* newMeter);
 
-        const float rate = 0.15f;
-        const int clipHoldTime = 3000;
-        const int peakHoldTime = 1500;
+private:
+    Meter* meter;
+    ToggleButton clipMeter;
 
-        int channelCount = 0;
-        bool clip = false;
-        bool vertical = false;
-        int clipHoldTimer = 0;
-        int peakHoldTimer = 0;
+    const float rate = 0.15f;
+    const int clipHoldTime = 3000;
+    const int peakHoldTime = 1500;
 
-        LevelValueDisplay<float> peak;
-        LevelValueDisplay<float> peakHold;
-        LevelValueDisplay<float> RMS;
-        JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MeterDisplay)
+    int channelCount = 0;
+    bool clip = false;
+    bool vertical = false;
+    int clipHoldTimer = 0;
+    int peakHoldTimer = 0;
+
+    LevelValueDisplay<float> peak;
+    LevelValueDisplay<float> peakHold;
+    LevelValueDisplay<float> RMS;
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MeterDisplay)
 };
