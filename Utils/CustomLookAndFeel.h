@@ -37,8 +37,11 @@ void drawToggleButton(Graphics& graphics, ToggleButton& button, bool shouldDrawB
     String text = button.getButtonText();
     if (text.contains("/"))
     {
-        text = text.initialSectionNotContaining("/");
-        if(!button.getToggleState())
+        if(button.getToggleState())
+        {
+            text = text.initialSectionNotContaining("/");
+        }
+        else
         {
             text = text.fromFirstOccurrenceOf("/", false, true);
             fillOffset = width / 2;
