@@ -11,7 +11,7 @@
 #include "BufferStore.h"
 
 
-BufferStore::BufferStore() : block(buffer)
+BufferStore::BufferStore() : buffer(), block(buffer)
 {
 }
 

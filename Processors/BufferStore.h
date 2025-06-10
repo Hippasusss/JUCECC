@@ -26,7 +26,7 @@ using namespace juce;
  	 const dsp::AudioBlock<float>* getAudioBlockPointer();
 
  private:
-    dsp::AudioBlock<float> block;
     AudioBuffer<float> buffer;
+    dsp::AudioBlock<float> block;
 
  };
