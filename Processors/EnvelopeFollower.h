@@ -28,10 +28,7 @@ public:
     void setAttack(float milliseconds);
     void setRelease(float milliseconds);
     void setAmount(float newAmount);
-    float getSlowTime() {return slowTime;};
-    float getFastTime() {return fastTime;};
     const std::vector<float>& getEnvelope() const;
-    std::function<void(float)> onValueCalculated;
     RingBufferVector<float> envelopeDisplayData;
 
 private:
@@ -42,9 +39,6 @@ private:
     float amount;
     float attackTime, releaseTime;
     float attackAlpha, releaseAlpha;
-
-    const float fastTime = 100;
-    const float slowTime = 600;
 
     std::vector<float> envelopeOutput;
     std::vector<float> envelopeState;
