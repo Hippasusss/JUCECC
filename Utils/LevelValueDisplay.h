@@ -85,7 +85,7 @@ ValueType LevelValueDisplay<ValueType>::getValue() const
 template <typename ValueType>
 ValueType LevelValueDisplay<ValueType>::getValueNormalisedDB() const
 {
-    return Helpers::getNormalisedDB(value, dbMinusInfinity);
+    return AudioHelpers::getNormalisedDB(value, dbMinusInfinity);
 }
 
 template <typename ValueType>
@@ -103,7 +103,7 @@ ValueType LevelValueDisplay<ValueType>::getSmoothedValue() const
 template <typename ValueType>
 ValueType LevelValueDisplay<ValueType>::getSmoothedValueNormalisedDB() const
 {
-    return Helpers::getNormalisedDB(smoother.getValue(), dbMinusInfinity);
+    return AudioHelpers::getNormalisedDB(smoother.getValue(), dbMinusInfinity);
 }
 
 template <typename ValueType>

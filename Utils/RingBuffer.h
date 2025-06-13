@@ -255,12 +255,12 @@ void RingBufferAudio<SampleType>::writeBlock(const dsp::AudioBlock<const SampleT
 
 	if(numSamplesToCopy > remainingSpace)
 	{
-		Helpers::copyAudioBlockIntoBuffer(newBlock, aggregateBuffer, remainingSpace, 0, writeIndex);
-		Helpers::copyAudioBlockIntoBuffer(newBlock, aggregateBuffer, numSamplesToCopy - remainingSpace, remainingSpace, 0);
+		AudioHelpers::copyAudioBlockIntoBuffer(newBlock, aggregateBuffer, remainingSpace, 0, writeIndex);
+		AudioHelpers::copyAudioBlockIntoBuffer(newBlock, aggregateBuffer, numSamplesToCopy - remainingSpace, remainingSpace, 0);
 	}
 	else
 	{
-		Helpers::copyAudioBlockIntoBuffer(newBlock, aggregateBuffer, numSamplesToCopy, 0, writeIndex);
+		AudioHelpers::copyAudioBlockIntoBuffer(newBlock, aggregateBuffer, numSamplesToCopy, 0, writeIndex);
 	}
 
 	writeIndex = (writeIndex + numSamplesToCopy) % numSamples;
@@ -280,12 +280,12 @@ void RingBufferAudio<SampleType>::readBlock(AudioBuffer<SampleType>& bufferToFil
 
 	if(numSamplesToCopy <= remainingSpace)
 	{
-		Helpers::copyAudioBlockIntoBuffer(tempBlock, bufferToFill, numSamplesToCopy, readIndex);
+		AudioHelpers::copyAudioBlockIntoBuffer(tempBlock, bufferToFill, numSamplesToCopy, readIndex);
 	}
 	else
 	{
-		Helpers::copyAudioBlockIntoBuffer(tempBlock, bufferToFill, remainingSpace, readIndex);
-		Helpers::copyAudioBlockIntoBuffer(tempBlock, bufferToFill, numSamplesToCopy - remainingSpace, 0, remainingSpace);
+		AudioHelpers::copyAudioBlockIntoBuffer(tempBlock, bufferToFill, remainingSpace, readIndex);
+		AudioHelpers::copyAudioBlockIntoBuffer(tempBlock, bufferToFill, numSamplesToCopy - remainingSpace, 0, remainingSpace);
 	}
 
 	readIndex = (readIndex + numSamplesToCopy) % numSamples;
@@ -300,13 +300,13 @@ void RingBufferAudio<SampleType>::getPreviousSamples(AudioBuffer<SampleType>& bu
 
 	if (writeIndex > numSamples)
 	{
-		Helpers::copyAudioBlockIntoBuffer(tempBlock, bufferToFill, numSamples, writeIndex - numSamples, 0);
+		AudioHelpers::copyAudioBlockIntoBuffer(tempBlock, bufferToFill, numSamples, writeIndex - numSamples, 0);
 	}
 	else
 	{
-		Helpers::copyAudioBlockIntoBuffer(tempBlock, bufferToFill, writeIndex, 0, 0);
+		AudioHelpers::copyAudioBlockIntoBuffer(tempBlock, bufferToFill, writeIndex, 0, 0);
 		const size_t samplesLeft = numSamples - writeIndex;
-		Helpers::copyAudioBlockIntoBuffer(tempBlock, bufferToFill, samplesLeft, tempBlock.getNumSamples() - samplesLeft , writeIndex);
+		AudioHelpers::copyAudioBlockIntoBuffer(tempBlock, bufferToFill, samplesLeft, tempBlock.getNumSamples() - samplesLeft , writeIndex);
 	}
 	
 }
