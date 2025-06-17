@@ -63,7 +63,7 @@ public:
             if (count == reductionFactor || pos == sourceSize)
             {
                 ValueType avg = sum / count;
-                ValueType value = dbScale ? Helpers::getNormalisedDB(avg) : avg;
+                ValueType value = dbScale ? AudioHelpers::getNormalisedDB(avg) : avg;
                 historyBuffer.writeValue(value);
                 sum = 0;
                 count = 0;
